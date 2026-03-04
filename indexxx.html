@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G-SPORT ELITE | Магазин Чемпионов</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; scroll-behavior: smooth; overflow-x: hidden; }
+        
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .product-card { background: white; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 24px; border: 1px solid #f3f4f6; }
+        .product-card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); border-color: #f97316; }
+
+        #cart-sidebar { transition: transform 0.4s ease-in-out; transform: translateX(100%); }
+        #cart-sidebar.open { transform: translateX(0); }
+        
+        .modal-bg { background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); }
+        
+        /* Пульсация кнопки связи */
+        .pulse-btn { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(249, 115, 22, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
+        }
+
+        .new-review-anim { animation: slideIn 0.5s ease-out forwards; border-left: 5px solid #f97316 !important; }
+        @keyframes slideIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <button onclick="openContactModal()" class="fixed bottom-8 left-8 w-16 h-16 bg-orange-600 text-white rounded-full flex items-center justify-center shadow-2xl z-[140] pulse-btn border-4 border-white text-2xl hover:scale-110 transition">
+        <i class="fa-solid fa-phone"></i>
+    </button>
+
+    <div id="contact-modal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4 modal-bg">
+        <div class="bg-white w-full max-w-xs p-8 rounded-[32px] shadow-2xl text-center">
+            <h2 class="text-2xl font-black uppercase italic mb-6">Свяжитесь с нами</h2>
+            <div class="space-y-4">
+                <a href="https://wa.me/77071234567" target="_blank" class="flex items-center justify-between w-full bg-green-500 text-white p-4 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-green-600 transition">
+                    <span>WhatsApp</span> <i class="fa-brands fa-whatsapp text-xl"></i>
+                </a>
+                <a href="tel:+77071234567" class="flex items-center justify-between w-full bg-zinc-900 text-white p-4 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-orange-600 transition">
+                    <span>Позвонить</span> <i class="fa-solid fa-mobile-button text-xl"></i>
+                </a>
+            </div>
+            <button onclick="closeContactModal()" class="mt-6 text-zinc-400 font-black text-[10px] uppercase tracking-widest">Закрыть</button>
+        </div>
+    </div>
+
+    <nav class="sticky top-0 z-[100] bg-zinc-900 text-white px-8 py-4 flex justify-between items-center border-b border-zinc-800">
+        <div class="text-2xl font-black italic text-orange-500 uppercase tracking-tighter">Спорт-Мастер</div>
+        <div class="hidden md:flex gap-10 text-[10px] uppercase font-black tracking-widest">
+            <a href="#catalog" class="hover:text-orange-500 transition">Каталог</a>
+            <a href="#trainers" class="hover:text-orange-500 transition">Команда</a>
+            <a href="#reviews" class="hover:text-orange-500 transition">Отзывы</a>
+        </div>
+        <div class="relative cursor-pointer hover:scale-110 transition" onclick="toggleCart()">
+            <i class="fa-solid fa-cart-shopping text-xl text-orange-500"></i>
+            <span id="cart-count" class="absolute -top-2 -right-2 bg-white text-zinc-900 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-black">0</span>
+        </div>
+    </nav>
+
+    <header class="relative h-[600px] bg-black flex items-center px-10 overflow-hidden">
+        <img src="южюю.jpeg" class="absolute inset-0 w-full h-full object-cover opacity-40">
+        <div class="relative z-20 max-w-4xl reveal active">
+            <h1 class="text-white text-7xl md:text-9xl font-black uppercase italic leading-[0.85]">ЭНЕРГИЯ <br> <span class="text-orange-500">ПОБЕДЫ</span></h1>
+            <p class="text-zinc-400 mt-8 max-w-md font-bold text-sm uppercase tracking-widest">Премиальное оборудование для профи и любителей в Астане.</p>
+        </div>
+    </header>
+
+    <section id="catalog" class="max-w-7xl mx-auto py-24 px-6">
+        <h2 class="text-5xl font-black uppercase mb-16 italic text-center">Каталог</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-zinc-900">
+            <div class="product-card p-6 reveal">
+                <img src="https://images.unsplash.com/photo-1638536532686-d610adfc8e5c?q=80&w=800" class="w-full aspect-square object-cover rounded-2xl mb-6 shadow-inner">
+                <h3 class="font-black uppercase text-sm mb-2">Гантели Hex Black</h3>
+                <div class="flex justify-between items-center">
+                    <span class="text-2xl font-black">8 000 ₸</span>
+                    <button onclick="addToCart('Гантели Hex Black', 8000)" class="w-12 h-12 bg-zinc-900 text-white rounded-full hover:bg-orange-600 transition shadow-lg">+</button>
+                </div>
+            </div>
+            <div class="product-card p-6 reveal">
+                <img src="https://images.unsplash.com/photo-1583473848882-f9a5bc7fd2ee?q=80&w=800" class="w-full aspect-square object-cover rounded-2xl mb-6 shadow-inner">
+                <h3 class="font-black uppercase text-sm mb-2">Перчатки Pro Boxing</h3>
+                <div class="flex justify-between items-center">
+                    <span class="text-2xl font-black">20 000 ₸</span>
+                    <button onclick="addToCart('Перчатки Pro Boxing', 20000)" class="w-12 h-12 bg-zinc-900 text-white rounded-full hover:bg-orange-600 transition shadow-lg">+</button>
+                </div>
+            </div>
+            <div class="product-card p-6 reveal">
+                <img src="кимано.jpeg" class="w-full aspect-square object-cover rounded-2xl mb-6 shadow-inner">
+                <h3 class="font-black uppercase text-sm mb-2">Кимоно Adidas</h3>
+                <div class="flex justify-between items-center">
+                    <span class="text-2xl font-black">40 000 ₸</span>
+                    <button onclick="addToCart('Кимоно Adidas', 40000)" class="w-12 h-12 bg-zinc-900 text-white rounded-full hover:bg-orange-600 transition shadow-lg">+</button>
+                </div>
+            </div>
+            <div class="product-card p-6 reveal">
+                <img src="штанга.jpeg" class="w-full aspect-square object-cover rounded-2xl mb-6 shadow-inner">
+                <h3 class="font-black uppercase text-sm mb-2">Штанга Olympic</h3>
+                <div class="flex justify-between items-center">
+                    <span class="text-2xl font-black">50 000 ₸</span>
+                    <button onclick="addToCart('Штанга Olympic', 50000)" class="w-12 h-12 bg-zinc-900 text-white rounded-full hover:bg-orange-600 transition shadow-lg">+</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="trainers" class="bg-zinc-950 py-24 text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-black uppercase text-center mb-20 italic">Наша Команда</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="text-center group"><img src="елдос.jpeg" class="w-full aspect-[3/4] object-cover rounded-2xl grayscale group-hover:grayscale-0 transition duration-700 mb-4"><h4 class="font-black uppercase italic">Елдос Сметов</h4></div>
+                <div class="text-center group"><img src="айтым.jpeg" class="w-full aspect-[3/4] object-cover rounded-2xl grayscale group-hover:grayscale-0 transition duration-700 mb-4"><h4 class="font-black uppercase italic">Айтым Жакупов</h4></div>
+                <div class="text-center group"><img src="махачев.jpeg" class="w-full aspect-[3/4] object-cover rounded-2xl grayscale group-hover:grayscale-0 transition duration-700 mb-4"><h4 class="font-black uppercase italic">Ислам Махачев</h4></div>
+                <div class="text-center group"><img src="ggg.jpeg" class="w-full aspect-[3/4] object-cover rounded-2xl grayscale group-hover:grayscale-0 transition duration-700 mb-4"><h4 class="font-black uppercase italic">GGG</h4></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="py-24 bg-white text-zinc-900">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-5xl font-black uppercase italic mb-16">Отзывы</h2>
+            <div id="reviews-container" class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left mb-12">
+                <div class="bg-zinc-50 p-8 rounded-[32px] border border-zinc-100">
+                    <div class="text-orange-500 mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="text-zinc-600 italic mb-6">"Отличное качество оборудования. Доставили очень быстро!"</p>
+                    <h4 class="font-black uppercase text-xs">Арман Б.</h4>
+                </div>
+            </div>
+            <button onclick="openReviewModal()" class="bg-zinc-900 text-white px-10 py-4 rounded-2xl font-black uppercase text-xs hover:bg-orange-600 transition">Оставить свой отзыв</button>
+        </div>
+    </section>
+
+    <section id="map" class="py-20 bg-zinc-50 px-6">
+        <div class="max-w-7xl mx-auto h-[450px] rounded-[40px] overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition duration-1000">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d40061.35334708781!2d71.4082697!3d51.1282205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424580c47db54609%3A0x97f9148dddb1541!2z0JDRgdGC0LDQvdCw!5e0!3m2!1sru!2skz!4v1700000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <div id="cart-overlay" class="fixed inset-0 bg-black/60 z-[110] hidden opacity-0 transition-opacity" onclick="toggleCart()"></div>
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white z-[120] shadow-2xl p-8 flex flex-col">
+        <div class="flex justify-between items-center mb-10">
+            <h2 class="text-2xl font-black uppercase italic">Корзина</h2>
+            <button onclick="toggleCart()"><i class="fa-solid fa-xmark text-2xl text-zinc-400"></i></button>
+        </div>
+        <div id="cart-items-list" class="flex-1 overflow-y-auto space-y-4">
+            <p class="text-zinc-400 text-center py-10 italic">Пусто...</p>
+        </div>
+        <div class="border-t pt-6 mt-6">
+            <div class="flex justify-between font-black text-xl mb-6"><span>ИТОГО:</span><span id="cart-total" class="text-orange-600">0 ₸</span></div>
+            <button onclick="openCheckout()" class="w-full bg-zinc-900 text-white py-5 rounded-2xl font-black uppercase hover:bg-orange-600 transition shadow-xl">Оформить заказ</button>
+        </div>
+    </div>
+
+    <div id="checkout-modal" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 modal-bg">
+        <div class="bg-white w-full max-w-md p-8 rounded-[40px] shadow-2xl">
+            <div id="checkout-main-view">
+                <h2 class="text-2xl font-black uppercase mb-6 italic">Оформление</h2>
+                <input type="text" id="cust-name" placeholder="ИМЯ" class="w-full bg-zinc-50 border p-4 rounded-2xl mb-4 outline-none">
+                <input type="tel" id="cust-phone" placeholder="ТЕЛЕФОН" class="w-full bg-zinc-50 border p-4 rounded-2xl mb-8 outline-none">
+                <div class="bg-orange-50 p-6 rounded-3xl mb-8 flex justify-between items-center"><span class="font-black text-xs uppercase">К оплате:</span><span id="final-price-val" class="text-2xl font-black text-orange-600">0 ₸</span></div>
+                <button onclick="handleOrder()" class="w-full bg-zinc-900 text-white py-5 rounded-2xl font-black uppercase hover:bg-orange-600 transition">Заказать</button>
+            </div>
+            <div id="success-view" class="hidden text-center py-10">
+                <i class="fa-solid fa-circle-check text-6xl text-green-500 mb-6 animate-bounce"></i>
+                <h3 class="text-2xl font-black uppercase mb-4 italic">Заказ принят!</h3>
+                <button onclick="closeCheckout()" class="bg-zinc-900 text-white px-10 py-4 rounded-2xl font-black uppercase">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="review-modal" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 modal-bg">
+        <div class="bg-white w-full max-w-md p-8 rounded-[40px] shadow-2xl">
+            <h2 class="text-2xl font-black uppercase mb-6 italic">Написать отзыв</h2>
+            <input type="text" id="rev-name" placeholder="Ваше имя" class="w-full bg-zinc-50 border p-4 rounded-2xl mb-4 outline-none">
+            <textarea id="rev-text" placeholder="Ваш отзыв..." rows="4" class="w-full bg-zinc-50 border p-4 rounded-2xl mb-6 outline-none"></textarea>
+            <button onclick="submitReview()" class="w-full bg-orange-600 text-white py-4 font-black uppercase rounded-2xl hover:bg-zinc-900 transition">Опубликовать</button>
+        </div>
+    </div>
+
+    <footer class="bg-zinc-950 py-10 text-center text-zinc-600 text-[10px] font-black uppercase tracking-[0.5em]">
+        © 2026 Спорт-Мастер Elite • Астана • Казахстан
+    </footer>
+
+    <script>
+        let cart = []; let total = 0;
+
+        // Модалка связи
+        function openContactModal() { document.getElementById('contact-modal').classList.replace('hidden', 'flex'); }
+        function closeContactModal() { document.getElementById('contact-modal').classList.replace('flex', 'hidden'); }
+
+        // Корзина
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('hidden');
+            setTimeout(() => overlay.classList.toggle('opacity-0'), 10);
+        }
+
+        function addToCart(name, price) {
+            cart.push({name, price}); total += price; updateUI();
+        }
+
+        function updateUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('cart-total').innerText = total.toLocaleString() + ' ₸';
+            const list = document.getElementById('cart-items-list');
+            list.innerHTML = cart.length ? cart.map((item, i) => `
+                <div class="flex justify-between items-center bg-zinc-50 p-4 rounded-2xl">
+                    <span class="font-black text-[10px] uppercase">${item.name}</span>
+                    <button onclick="removeFromCart(${i})" class="text-red-500 text-xs"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+            `).join('') : '<p class="text-zinc-400 text-center py-10 italic">Пусто...</p>';
+        }
+
+        function removeFromCart(i) { total -= cart[i].price; cart.splice(i, 1); updateUI(); }
+
+        // Оформление
+        function openCheckout() {
+            if(!cart.length) return alert("Корзина пуста!");
+            toggleCart();
+            document.getElementById('checkout-modal').classList.replace('hidden', 'flex');
+            document.getElementById('final-price-val').innerText = total.toLocaleString() + ' ₸';
+        }
+
+        function handleOrder() {
+            if(!document.getElementById('cust-name').value) return alert("Введите имя!");
+            document.getElementById('checkout-main-view').classList.add('hidden');
+            document.getElementById('success-view').classList.remove('hidden');
+            cart = []; total = 0; updateUI();
+        }
+
+        function closeCheckout() { document.getElementById('checkout-modal').classList.replace('flex', 'hidden'); }
+
+        // Отзывы
+        function openReviewModal() { document.getElementById('review-modal').classList.replace('hidden', 'flex'); }
+        function closeReviewModal() { document.getElementById('review-modal').classList.replace('flex', 'hidden'); }
+
+        function submitReview() {
+            const name = document.getElementById('rev-name').value;
+            const text = document.getElementById('rev-text').value;
+            if(!name || !text) return alert("Заполните поля!");
+
+            const container = document.getElementById('reviews-container');
+            const initials = name.substring(0,2).toUpperCase();
+            
+            const html = `
+                <div class="bg-white p-8 rounded-[32px] border-2 border-orange-100 new-review-anim shadow-xl">
+                    <div class="text-orange-500 mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="text-zinc-600 italic mb-6">"${text}"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-zinc-900 text-white rounded-full flex items-center justify-center font-black">${initials}</div>
+                        <div><h4 class="font-black uppercase text-xs">${name}</h4><p class="text-[9px] text-orange-500 font-black uppercase">Только что</p></div>
+                    </div>
+                </div>`;
+            container.insertAdjacentHTML('afterbegin', html);
+            closeReviewModal();
+            document.getElementById('rev-name').value = ""; document.getElementById('rev-text').value = "";
+        }
+
+        function reveal() {
+            document.querySelectorAll(".reveal").forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
+            });
+        }
+        window.addEventListener("scroll", reveal); window.onload = reveal;
+    </script>
+</body>
+</html>
